@@ -126,14 +126,14 @@
           }
         });
 
-        shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
+        SHELL_SDK.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
           clientIdentifier: 'mytest',
           auth: {
             response_type: 'token'  // request a user token within the context
           }
         });
 
-        shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (event) => {
+        SHELL_SDK.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (event) => {
 
           const {
             // extract required context from event content
