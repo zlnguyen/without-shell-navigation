@@ -125,6 +125,32 @@
             translate(LANG_CODE);
           }
         });
+
+        shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
+          clientIdentifier: 'mytest',
+          auth: {
+            response_type: 'token'  // request a user token within the context
+          }
+        });
+
+        shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (event) => {
+
+          const {
+            // extract required context from event content
+            cloudHost,
+            account,
+            company,
+            user,
+            // extract authentication data from event content
+            auth
+          } = JSON.parse(event);
+
+          // Access_token has a short life stpan and needs to be refreshed before expiring
+          // Each extension need to implement its own strategy to fresh it.
+          initializeRefreshTokenStrategy(shellSdk, auth);
+          console.log(cloudHost);
+          console.log(auth);
+        });        
       }
     </script>
   </body>
